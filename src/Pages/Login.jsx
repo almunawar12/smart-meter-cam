@@ -11,12 +11,11 @@ export default function Login() {
   return (
     <div className="min-h-screen flex">
       <div className="flex-1 bg-[#5189C6] p-5">
-        <div className="flex h-full justify-center items-center">
-          <img
-            src="/path-to-your-image.jpg"
-            alt="Login Image"
-            className="max-w-xs"
-          />
+        <div className="flex h-full flex-col justify-center items-center">
+          <Link to="/">
+            <img src={Logo} alt="Logo" className="w-16 mb-2 cursor-pointer" />
+          </Link>
+          <p className="text-2xl text-white font-semibold">Smart Meter Cam</p>
         </div>
       </div>
 
