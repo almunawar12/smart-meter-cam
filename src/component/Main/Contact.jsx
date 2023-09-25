@@ -1,6 +1,6 @@
 import Form from "../Form";
 
-export default function Kontak() {
+export default function Contact() {
   return (
     <div className="w-4/5 mx-auto bg-white shadow-md rounded-md overflow-hidden mb-8">
       <div className="flex">
@@ -38,7 +38,7 @@ export default function Kontak() {
             </div>
             <button
               type="submit"
-              className="w-full font-poppins text-xl bg-[#5189C6] hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+              className="w-full font-poppins text-xl bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
             >
               Kirim
             </button>
