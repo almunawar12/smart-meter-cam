@@ -6,10 +6,9 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 
 export default function Login() {
-  console.log(window.location.pathname);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex font-poppins">
       <div className="flex-1 bg-[#5189C6] p-5">
         <div className="flex h-full flex-col justify-center items-center">
           <Link to="/">
@@ -25,7 +24,7 @@ export default function Login() {
             <img src={Logo} alt="Logo" className="w-10 mb-5 cursor-pointer" />
           </Link>
           <h2 className="text-2xl font-semibold">Selamat Datang Kembali !</h2>
-          <p className="mb-6">Silahkan masuk terlebih dahulu</p>
+          <p className="mb-3">Silahkan masuk terlebih dahulu</p>
           <form>
             <Form label="Username" placeholder="Masukan Username" />
             <Form label="Password" placeholder="" />
@@ -49,8 +48,8 @@ export default function Login() {
               </button>
             </div>
           </form>
-          <p className="text-gray-600 text-sm text-center">
-            Belum punya akun? <Link to="/register">Daftar disini</Link>
+          <p className="text-gray-600 text-sm text-center mb-0">
+            Belum punya akun? <span className="text-blue-400 hover:text-blue-500"><Link to="/register">Daftar disini</Link></span>
           </p>
         </div>
       </div>

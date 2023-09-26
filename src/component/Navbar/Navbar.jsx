@@ -1,18 +1,21 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Logo from "../../assets/img/Logo.png";
 import Button from "../Button";
 
 function Navbar() {
-  const [hide, setHide] = useState("block");
-  const handleClick = () => setHide("hidden");
+  const location = useLocation();
+
+  const shouldHideNavbar = location.pathname === "/login" || location.pathname === "/register";
+  
   return (
-    <nav className={"bg-white p-4 sticky top-0 " + hide}>
+    <nav className={`bg-white p-4 sticky top-0 ${shouldHideNavbar ? "hidden" : "block"}`}>
       <div className="container mx-auto flex flex-wrap justify-between items-center">
         <a href="/" className="ml-4 md:ml-20">
           <img src={Logo} alt="" className="w-12" />
         </a>
 
-        <ul className="mt-4 md:mt-0 md:flex space-x-4">
+        <ul className="mt-4 md:mt-0 md:flex space-x-4 px-auto">
           <li>
             <a
               href="/"
@@ -47,18 +50,16 @@ function Navbar() {
           </li>
         </ul>
 
-        <div className="flex mt-4 md:mt-0 space-x-4 ml-4 md:ml-0">
+        <div className="flex mt-4 md:mt-0 space-x-4 md:ml-0 mr-14">
           <Button
             link="/login"
             label="Masuk"
             color="bg-blue-500 hover:bg-blue-600 text-white border-none"
-            handleClick={handleClick}
             />
           <Button
             link="/register"
             label="Daftar"
             color="bg-white hover:bg-blue-600 hover:text-white text-blue-500 border-blue-500"
-            handleClick={handleClick}
           />
         </div>
       </div>

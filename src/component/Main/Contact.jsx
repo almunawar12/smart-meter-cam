@@ -38,7 +38,7 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              className="w-full font-poppins text-xl bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+              className="w-full font-poppins text-xl bg-[#5189C6] hover:bg-blue-400 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
             >
               Kirim
             </button>
