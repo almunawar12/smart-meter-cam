@@ -1,10 +1,61 @@
-import Form from "../component/Form";
 import Logo from "../assets/img/Logo.png";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import React, { useState } from "react";
+import axios from "axios";
+
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone_number: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const config = {
+    headers: {
+      "access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", // Gunakan sintaks "Bearer" sebelum token
+      "Content-Type": "application/json", // Tetapkan tipe konten ke JSON
+    },
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Make a POST request to your registration endpoint with form data
+      console.log("formData", formData);
+      const response = await axios.post(
+        "https://pemadam.pptik.id/api/api.v1/users/signup",
+        formData,
+        config
+      );
+
+      // Handle the response (you might want to redirect the user or show a success message)
+      // console.log("Registration successful!", response.data);
+      alert('Registrasi Berhasil');
+      window.location.href = "/login";
+
+      // Reset the form after successful registration
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        phone_number: "",
+      });
+    } catch (error) {
+      // Handle errors (show an error message to the user)
+      console.error("Registration failed!", error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex font-poppins">
       <div className="flex-1 bg-[#5189C6] p-5">
@@ -23,12 +74,55 @@ export default function Register() {
           </Link>
           <h2 className="text-2xl font-semibold">Selamat Datang !</h2>
           <p className="mb-3">Silahkan Registrasi terlebih dahulu</p>
-          <form>
-            <Form label="Nama Lengkap" placeholder="Contoh: Jhoni smith" />
-            <Form label="Email" placeholder="Contoh: jhoni@gmail.com" />
-            <Form label="Password" placeholder="" />
-
-            <div className="mb-1">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-2">
+              <label className="block text-gray-600 font-semibold">Nama</label>
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+                placeholder="Nama Lengkap"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-2">
+              <label className="block text-gray-600 font-semibold">Email</label>
+              <input
+                type="email"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+                placeholder="ex: jhon@gmail.com"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-2">
+              <label className="block text-gray-600 font-semibold">
+                Password
+              </label>
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+                value={formData.password}
+                onChange={handleChange}
+                name="password"
+              />
+            </div>
+            <div className="mb-2">
+              <label className="block text-gray-600 font-semibold">
+                No Handphone
+              </label>
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+                placeholder="ex: 08xxxxxxx"
+                name="phone_number"
+                value={formData.phone_number}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
               <button
                 type="submit"
                 className="w-full bg-[#5189C6] text-white p-2 rounded-md hover:bg-blue-400 transition duration-300"
@@ -36,19 +130,12 @@ export default function Register() {
                 Masuk
               </button>
             </div>
-            <p className="text-center mb-1">Atau</p>
-            <div className="mb-6">
-              <button
-                type="submit"
-                className="w-full bg-white text-gray-500 p-2 rounded-md hover:bg-gray-200 border border-black"
-              >
-                <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-                Daftar dengan Google
-              </button>
-            </div>
           </form>
           <p className="text-gray-600 text-sm text-center">
-            Sudah punya akun? <span className="text-blue-400 hover:text-blue-500"><Link to="/login">Masuk di sini</Link></span>
+            Sudah punya akun?{" "}
+            <span className="text-blue-400 hover:text-blue-500">
+              <Link to="/login">Masuk di sini</Link>
+            </span>
           </p>
         </div>
       </div>

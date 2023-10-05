@@ -1,3 +1,4 @@
+import React from "react";
 import backgroundImage from "../../assets/img/banner.jpg";
 
 export default function Banner() {
@@ -5,6 +6,14 @@ export default function Banner() {
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    position: 'relative',
+  };
+
+  const buttonStyle = {
+    position: 'absolute',
+    top: '66%', 
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   };
 
   return (
@@ -17,7 +26,8 @@ export default function Banner() {
       </p>
       <a
         href="#"
-        className="mt-3 bg-[#FFAA4D] hover:bg-amber-500 text-white px-4 py-2 rounded-md font-poppins font-semibold drop-shadow-md"
+        className="bg-[#FFAA4D] hover:bg-amber-500 text-white px-4 py-2 rounded-md font-poppins font-semibold drop-shadow-md"
+        style={buttonStyle}
       >
         Cek Sekarang
       </a>

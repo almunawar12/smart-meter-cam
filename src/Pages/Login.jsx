@@ -1,11 +1,68 @@
-import Form from "../component/Form";
+import React, { useState } from "react";
+import axios from "axios";
 import Logo from "../assets/img/Logo.png";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [userRole, setUserRole] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const config = {
+    headers: {
+      "access-token":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", // Gunakan sintaks "Bearer" sebelum token
+      "Content-Type": "application/json", // Tetapkan tipe konten ke JSON
+    },
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Make a POST request to your API endpoint with form data
+      console.log("formData", formData);
+      const response = await axios.post(
+        "https://pemadam.pptik.id/api/api.v1/users/signin",
+        formData,
+        config
+      );
+
+      // Tentukan peran pengguna berdasarkan respons dari server
+    const { role } = response.data; // Peran pengguna (user atau admin) dari respons server
+    setUserRole(role);
+
+      // Handle the response (you might want to redirect the user or show a success message)
+      // console.log("Login successful!", response.data);
+      alert('Berhasil Login');
+      window.location.href = "/user_dashboard";
+      // if (role === "user") {
+      //   window.location.href = "/user_dashboard";
+      // } else if (role === "admin") {
+      //   window.location.href = "/admin_dashboard";
+      // }
+
+      // Reset the form after successful login
+      setFormData({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      // Handle errors (show an error message to the user)
+      // console.error("Login failed!", error);
+      alert('Login Gagal');
+    }
+  };
 
   return (
     <div className="min-h-screen flex font-poppins">
@@ -25,31 +82,47 @@ export default function Login() {
           </Link>
           <h2 className="text-2xl font-semibold">Selamat Datang Kembali !</h2>
           <p className="mb-3">Silahkan masuk terlebih dahulu</p>
-          <form>
-            <Form label="Username" placeholder="Masukan Username" />
-            <Form label="Password" placeholder="" />
-
-            <div className="mb-1">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-600 font-semibold">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+                placeholder="Username"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-600 font-semibold">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+                placeholder="Username"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300"
+                className="w-full bg-[#5189C6] text-white p-2 rounded-md hover:bg-blue-400 transition duration-300"
               >
                 Masuk
               </button>
             </div>
-            <p className="text-center mb-1">Atau</p>
-            <div className="mb-6">
-              <button
-                type="submit"
-                className="w-full bg-white text-gray-500 p-2 rounded-md hover:bg-gray-200 border border-black"
-              >
-                <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-                Masuk dengan Google
-              </button>
-            </div>
           </form>
           <p className="text-gray-600 text-sm text-center mb-0">
-            Belum punya akun? <span className="text-blue-400 hover:text-blue-500"><Link to="/register">Daftar disini</Link></span>
+            Belum punya akun?{" "}
+            <span className="text-blue-400 hover:text-blue-500">
+              <Link to="/register">Daftar disini</Link>
+            </span>
           </p>
         </div>
       </div>

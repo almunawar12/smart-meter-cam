@@ -7,10 +7,10 @@ function Navbar() {
   const location = useLocation();
 
   const shouldHideNavbar = location.pathname === "/login" || location.pathname === "/register";
-  
+
   return (
     <nav className={`bg-white p-4 sticky top-0 ${shouldHideNavbar ? "hidden" : "block"}`}>
-      <div className="container mx-auto flex flex-wrap justify-between items-center">
+      <div className="container mx-auto flex flex-wrap justify-between items-center font-poppins">
         <a href="/" className="ml-4 md:ml-20">
           <img src={Logo} alt="" className="w-12" />
         </a>
@@ -19,7 +19,7 @@ function Navbar() {
           <li>
             <a
               href="/"
-              className="text-black font-medium hover:text-blue-700 font-poppins text-sm"
+              className="text-black font-medium hover:text-blue-700 text-sm"
             >
               Beranda
             </a>
@@ -27,7 +27,7 @@ function Navbar() {
           <li>
             <a
               href="#about"
-              className="text-gray-400 font-medium hover:text-black font-poppins text-sm"
+              className="text-gray-400 font-medium hover:text-black text-sm"
             >
               Tentang Kami
             </a>
@@ -35,7 +35,7 @@ function Navbar() {
           <li>
             <a
               href="#layanan"
-              className="text-gray-400 font-medium hover:text-black font-poppins text-sm"
+              className="text-gray-400 font-medium hover:text-black text-sm"
             >
               Layanan
             </a>
@@ -43,7 +43,7 @@ function Navbar() {
           <li>
             <a
               href="#kontak"
-              className="text-gray-400 font-medium hover:text-black font-poppins text-sm"
+              className="text-gray-400 font-medium hover:text-black text-sm"
             >
               Kontak
             </a>

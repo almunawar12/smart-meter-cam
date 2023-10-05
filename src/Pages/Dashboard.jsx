@@ -4,17 +4,19 @@ import Kontak from "../component/Main/Contact"
 import Footer from "../component/Footer/Footer"
 
 import Layanan from "../component/Main/Layanan"
+import Navbar from "../component/Navbar/Navbar"
 
 export default function Dashboard () {
     return (
         <>
+        <Navbar />
         <section>
             <Banner />
         </section>
         <section id="about" className="mt-5">
             <Tentang />
         </section>
-        <section className="mt-7" id="layanan">
+        <section className="mt-5" id="layanan">
             <h1 className="font-poppins text-3xl font-bold text-blue-500 ml-16 mb-5">Layanan</h1>
             <Layanan />
         </section>
