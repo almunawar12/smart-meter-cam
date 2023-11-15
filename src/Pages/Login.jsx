@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Logo from "../assets/img/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
+  const router = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const showToastError = () => {
+    toast.error("Login Gagal !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const showToastSuccess = () => {
+    toast.success("Berhasil Login", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
   const [userRole, setUserRole] = useState("");
 
@@ -22,35 +38,36 @@ export default function Login() {
   const config = {
     headers: {
       "access-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", // Gunakan sintaks "Bearer" sebelum token
-      "Content-Type": "application/json", // Tetapkan tipe konten ke JSON
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.ifzSo4nZ09IMFlMnLQtW3pFcLD8jyeMSXZxqaQmgMns",
+      "Content-Type": "application/json",
     },
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Make a POST request to your API endpoint with form data
-      console.log("formData", formData);
+      // console.log("formData", formData);
       const response = await axios.post(
-        "https://pemadam.pptik.id/api/api.v1/users/signin",
+        "https://hydro-connect.pptik.id/api/api.v1/users/signin",
         formData,
         config
       );
 
-      // Tentukan peran pengguna berdasarkan respons dari server
-    const { role } = response.data; // Peran pengguna (user atau admin) dari respons server
-    setUserRole(role);
+      const { role, token } = response.data; 
+      setUserRole(role);
+      // localStorage.setItem("token", token)
+      const tokenBase64 = btoa(token);
+      Cookies.set("token", tokenBase64, { expires: 2 });
 
-      // Handle the response (you might want to redirect the user or show a success message)
       // console.log("Login successful!", response.data);
-      alert('Berhasil Login');
-      window.location.href = "/user_dashboard";
-      // if (role === "user") {
-      //   window.location.href = "/user_dashboard";
-      // } else if (role === "admin") {
-      //   window.location.href = "/admin_dashboard";
-      // }
+      // alert('Berhasil Login');
+      showToastSuccess();
+      
+      if (role === "user") {
+        router("/user_dashboard");
+      } else if (role === "admin") {
+        router("/admin/dashboard");
+      }
 
       // Reset the form after successful login
       setFormData({
@@ -60,7 +77,8 @@ export default function Login() {
     } catch (error) {
       // Handle errors (show an error message to the user)
       // console.error("Login failed!", error);
-      alert('Login Gagal');
+      showToastError();
+      console.log(error);
     }
   };
 
@@ -84,9 +102,7 @@ export default function Login() {
           <p className="mb-3">Silahkan masuk terlebih dahulu</p>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-600 font-semibold">
-                Email
-              </label>
+              <label className="block text-gray-600 font-semibold">Email</label>
               <input
                 type="email"
                 name="email"

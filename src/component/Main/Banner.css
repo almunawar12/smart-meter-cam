@@ -1,0 +1,7 @@
+/* Banner.css */
+@media (max-width: 768px) {
+    .banner-container {
+      background-size: cover; /* or contain, or any other appropriate value based on your design */
+    }
+  }
+  

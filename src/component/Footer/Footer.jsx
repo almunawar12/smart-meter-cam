@@ -1,4 +1,3 @@
-
 import logo from "../../assets/img/logo.png";
 
 export default function Footer() {
@@ -6,10 +5,10 @@ export default function Footer() {
     <footer className="bg-[#5189C6] text-white py-8 font-poppins">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <div className="md:w-1/3 px-10 flex items-center">
-          <img src={logo} alt="Logo" className="w-12 h-12 mr-7" /> {/* Tambahkan gambar logo */}
+          <img src={logo} alt="Logo" className="w-12 h-12 mr-7" />
           <div>
             <h3 className="text-2xl font-semibold">Informasi Kontak</h3>
-            
+
             <p>Email: example@example.com</p>
             <p>Telepon: (123) 456-7890</p>
           </div>

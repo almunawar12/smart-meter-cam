@@ -1,11 +1,19 @@
 import React from "react";
 import Logo from "../../assets/img/Logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export const NavbarUser = () => {
+  const handleLogout = () => {
+    // Hapus informasi sesi pengguna dari localStorage atau sessionStorage
+    localStorage.removeItem("userRole"); // atau sessionStorage.removeItem("userRole");
+
+    // Redirect ke halaman login atau halaman lain jika diperlukan
+    alert("logout Berhasil");
+    window.location.href = "/"; // Ganti "/login" dengan rute ke halaman login Anda
+  };
+
   return (
-    <nav className="bg-white p-4 sticky top-0">
+    <nav className="bg-white p-4 top-0 z-50 fixed w-full">
       <div className="container mx-auto flex flex-wrap justify-between items-center font-poppins">
         <a href="/" className="ml-4 md:ml-12">
           <img src={Logo} alt="" className="w-12" />
@@ -33,16 +41,23 @@ export const NavbarUser = () => {
               href="#visualisasi"
               className="text-gray-400 font-medium hover:text-black text-sm"
             >
-              Visualisai
+              Visualisasi
             </a>
           </li>
         </ul>
 
-        <div className="flex mt-4 md:mt-0 space-x-4 md:ml-0 mr-14">
-        <div className="circle-container">
-            <FontAwesomeIcon icon={faUser} className="text-white" />
-          </div>
-          <span className="py-2">M Rifki</span>
+        <div className="relative mt-4 md:mt-0 space-x-4 md:ml-0 mr-10 group">
+          <button className="group relative focus:outline-none">
+            <span className="py-2">M Rifki</span>
+            <ul className="absolute hidden bg-white border border-gray-300 mt-2 py-2 rounded-md text-black group-hover:block">
+              <li className="cursor-pointer px-4 py-2 hover:bg-gray-100">
+              <Link to="/user_profile">Profil</Link>
+              </li>
+              <li className="cursor-pointer px-4 py-2 hover:bg-gray-100" onClick={handleLogout}>
+                Logout
+              </li>
+            </ul>
+          </button>
         </div>
       </div>
     </nav>

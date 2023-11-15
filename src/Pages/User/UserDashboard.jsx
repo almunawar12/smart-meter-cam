@@ -1,6 +1,8 @@
 import React from "react";
 import { NavbarUser } from "../../component/Navbar/NavbarUser";
 import Banner from "../../component/Main/Banner";
+import { Visualisasi } from "../../component/Visualisasi/Visualisasi";
+import Footer from "../../component/Footer/Footer";
 
 export const UserDashboard = () => {
   return (
@@ -9,7 +11,10 @@ export const UserDashboard = () => {
         <NavbarUser />
       </section>
       <Banner />
-      <section className="flex flex-col items-center mt-5 font-poppins" id="device">
+      <section
+        className="flex flex-col items-center mt-5 font-poppins"
+        id="device"
+      >
         <h1 className="text-2xl text-center font-bold text-[#5189C6] mb-2">
           Daftarkan Device Anda
         </h1>
@@ -17,7 +22,10 @@ export const UserDashboard = () => {
         <div className="bg-white p-8 rounded shadow-md w-96">
           <form className="w-full">
             <div className="mb-4">
-              <label htmlFor="nama" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="nama"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Nama
               </label>
               <input
@@ -28,7 +36,10 @@ export const UserDashboard = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Email
               </label>
               <input
@@ -39,7 +50,10 @@ export const UserDashboard = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Jenis Perangkat
               </label>
               <input
@@ -50,7 +64,10 @@ export const UserDashboard = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-600"
+              >
                 No Perangkat
               </label>
               <input
@@ -60,16 +77,24 @@ export const UserDashboard = () => {
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
             </div>
-            
+
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+              className="w-full bg-[#5189C6] text-white p-2 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:border-blue-300"
             >
               Kirim
             </button>
           </form>
         </div>
       </section>
+
+      <section className="">
+        <div className="flex justify-center items-center h-screen">
+          <Visualisasi />
+        </div>
+      </section>
+
+      <Footer />
     </>
   );
 };
