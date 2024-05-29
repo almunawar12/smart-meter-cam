@@ -54,10 +54,13 @@ export default function Navbar() {
                         Devices
                     </Link>
                 </div>
+                <Link href="/admin/profile" className="lg:hidden">
+                    <p className='text-white hover:text-[#FFAA4D] mt-2'>Profile</p>
+                </Link>
                 <div onClick={handleLogout} className="lg:hidden">
-                    <p className='cursor-pointer text-white mt-2'>Logout</p>
+                    <p className='cursor-pointer text-white hover:text-[#FFAA4D] mt-2'>Logout</p>
                 </div>
-                <div className="relative lg:block">
+                <div className="relative lg:block md:hidden">
                     <Image
                         src="/assets/icons/profile.png"
                         width={40}
@@ -68,7 +71,10 @@ export default function Navbar() {
                     />
                     {isDropdownOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
-                            <p className="block px-4 py-2 text-gray-800 cursor-pointer" onClick={handleLogout}>
+                            <Link href="/admin/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                Profile
+                            </Link>
+                            <p className="block px-4 py-2 text-gray-800 cursor-pointer hover:bg-gray-200" onClick={handleLogout}>
                                 Logout
                             </p>
                         </div>

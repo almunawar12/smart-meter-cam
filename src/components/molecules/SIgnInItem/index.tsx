@@ -23,7 +23,7 @@ export default function SignInItem(): JSX.Element {
 
     const result = await setLogin(data);
 
-    console.log(result);
+    // console.log(result);
 
     if (result.error) {
       alert(result.message);
