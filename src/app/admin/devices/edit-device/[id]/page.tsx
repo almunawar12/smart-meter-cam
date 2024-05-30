@@ -1,44 +1,27 @@
 
 'use client'
 import { getDetaildevice, updateDevice } from '@/services/user';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface EditDeviceProps {
   params: { id: string };
 }
 export default function EditDevice(params: EditDeviceProps) {
+  const router = useRouter();
+  const [deviceGuid, setDeviceGuid] = useState("")
+  const token: any = localStorage.getItem('token');
+
   const [formData, setFormData] = useState({
     deviceName: '',
     deviceGuid: '',
     longitude: '',
     latitude: '',
     deviceType: '',
+    companyGuid: '',
+    userGuid: '',
+    guid: ''
   });
-
-  const token: any = localStorage.getItem('token');
-
-  useEffect(() => {
-    console.log(params.params.id)
-    const fetchDeviceData = async () => {
-      try {
-        const response = await getDetaildevice(token, params.params.id);
-        console.log('Response:', response);
-        const device = response.data;
-        setFormData({
-          deviceName: device.name || '',
-          deviceGuid: device.deviceGuid || '',
-          longitude: device.longitude.toString() || '',
-          latitude: device.latitude.toString() || '',
-          deviceType: device.type || '',
-        });
-      } catch (error) {
-        console.error('Error fetching history data:', error);
-      }
-    };
-
-    fetchDeviceData();
-  }, [params.params.id, token]);
-
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -48,14 +31,54 @@ export default function EditDevice(params: EditDeviceProps) {
     });
   };
 
+  useEffect(() => {
+    // console.log(params.params.id)
+    const fetchDeviceData = async () => {
+      try {
+        const response = await getDetaildevice(token, params.params.id);
+        const device = response.data;
+        setFormData({
+          deviceName: device.name || '',
+          deviceGuid: device.deviceGuid || '',
+          longitude: device.longitude.toString() || '',
+          latitude: device.latitude.toString() || '',
+          deviceType: device.type || '',
+          userGuid: 'USER-8048130b-4847-404a-9b6c-56a6958a94b3-2024',
+          companyGuid: 'COMPANY-59463305-0abe-4c64-a4f5-533527956e43-2024',
+          guid: device.guid
+        });
+        setDeviceGuid(device.deviceGuid);
+      } catch (error) {
+        console.error('Error fetching history data:', error);
+      }
+    };
+
+    fetchDeviceData();
+  }, [params.params.id, token]);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await updateDevice(token, params.params.id, {companyGuid: 'COMPANY-59463305-0abe-4c64-a4f5-533527956e43-2024', userGuid: 'USER-8048130b-4847-404a-9b6c-56a6958a94b3-2024', name: formData.deviceName, type: formData.deviceType, deviceGuid: formData.deviceGuid, longitude: formData.longitude, latitude: formData.latitude});
-      console.log('Device updated:', response);
+      const data = {
+        name: formData.deviceName,
+        companyGuid: 'COMPANY-59463305-0abe-4c64-a4f5-533527956e43-2024',
+        serGuid: 'USER-8048130b-4847-404a-9b6c-56a6958a94b3-2024',
+        deviceGuid: formData.deviceGuid,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+        type: formData.deviceType,
+      }
+
+      const response = await updateDevice(formData.guid, data);
+      console.log(response)
+      router.push('/admin/devices')
     } catch (error) {
       console.error('Error updating device:', error);
     }
+  };
+
+  const handleCancel = () => {
+    router.push('/admin/devices');
   };
 
   return (
@@ -123,9 +146,15 @@ export default function EditDevice(params: EditDeviceProps) {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
           >
             Save Changes
+          </button>
+          <button
+            onClick={handleCancel}
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Cancel
           </button>
         </form>
       </div>

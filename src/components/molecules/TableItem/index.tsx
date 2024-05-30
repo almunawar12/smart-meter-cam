@@ -20,7 +20,27 @@ export default function TableItem() {
         };
 
         fetchHistoryData();
-    }, []);
+    }, [token]);
+
+    const handleDelete = async (deviceGuid: string) => {
+        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus perangkat ini?");
+        if (!confirmDelete) {
+            return;
+        }
+        try {
+            const response = await deletDevice(token, deviceGuid); // Pastikan deleteDevice mengembalikan response yang sesuai
+            if (!response.error) {
+                setDeviceData((prevData: any) =>
+                    prevData.filter((device: any) => device.deviceGuid !== deviceGuid)
+                );
+                console.log('Data terhapus:', deviceGuid);
+            } else {
+                console.error('Error deleting device from API:', response.message);
+            }
+        } catch (error) {
+            console.error('Error deleting device:', error);
+        }
+    };
 
     return (
         <tbody className="bg-white divide-y divide-gray-200">
@@ -28,7 +48,7 @@ export default function TableItem() {
 
                 <tr key={index}>
                     <td className="px-6 py-4 whitespace-nowrap">
-
+                        {index + 1}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                         {device.name}
@@ -43,28 +63,24 @@ export default function TableItem() {
                         {new Date(device.createdAt).toLocaleDateString('en-GB')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex items-center">
-                        <Link href={"/admin/devices/edit-device/"+device.guid} className="flex items-center mr-4">
+                        <Link href={"/admin/devices/edit-device/" + device.guid} className="flex items-center mr-4">
                             <div className="text-blue-500 hover:text-blue-700">
                                 <FaEdit />
                             </div>
-                            {/* <span className="ml-1">Edit</span> */}
                         </Link>
-                        <Link href="#" className="flex items-center mr-4" onClick={() => deletDevice(token, device.deviceGuid)}>
+                        <button onClick={() => handleDelete(device.deviceGuid)} className="flex items-center mr-4">
                             <div className="text-red-500 hover:text-red-700">
                                 <FaTrash />
                             </div>
-                            {/* <span className="ml-1">Hapus</span> */}
-                        </Link>
-                        <Link href="#" className="flex items-center">
-                            <div className=" text-orange-500 hover:text-orange-700">
+                        </button>
+                        <Link href={"/admin/devices/history/" + device.deviceGuid} className="flex items-center">
+                            <div className="text-orange-500 hover:text-orange-700">
                                 <FaHistory />
                             </div>
-                            {/* <span className="ml-1">History</span> */}
                         </Link>
                     </td>
                 </tr>
             )}
-
         </tbody>
-    )
+    );
 }
