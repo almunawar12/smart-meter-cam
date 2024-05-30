@@ -34,9 +34,11 @@ export default function TableItem() {
                     prevData.filter((device: any) => device.deviceGuid !== deviceGuid)
                 );
                 console.log('Data terhapus:', deviceGuid);
-            } else {
-                console.error('Error deleting device from API:', response.message);
             }
+            //  else {
+            //     console.error('Error deleting device from API:', response.message);
+            // }
+            location.reload()
         } catch (error) {
             console.error('Error deleting device:', error);
         }
@@ -68,7 +70,7 @@ export default function TableItem() {
                                 <FaEdit />
                             </div>
                         </Link>
-                        <button onClick={() => handleDelete(device.deviceGuid)} className="flex items-center mr-4">
+                        <button onClick={() => handleDelete(device.guid)} className="flex items-center mr-4">
                             <div className="text-red-500 hover:text-red-700">
                                 <FaTrash />
                             </div>

@@ -43,8 +43,8 @@ export default function EditDevice(params: EditDeviceProps) {
           longitude: device.longitude.toString() || '',
           latitude: device.latitude.toString() || '',
           deviceType: device.type || '',
-          userGuid: 'USER-8048130b-4847-404a-9b6c-56a6958a94b3-2024',
-          companyGuid: 'COMPANY-59463305-0abe-4c64-a4f5-533527956e43-2024',
+          userGuid: device.userGuid,
+          companyGuid: device.companyGuid,
           guid: device.guid
         });
         setDeviceGuid(device.deviceGuid);
