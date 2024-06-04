@@ -4,9 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "sso.pptik.id",
+        hostname: "power-cam.pptik.id",
         port: "",
-        pathname: "/api/v1/",
+        pathname: "/api/v1/images/**",
       },
     ],
   },

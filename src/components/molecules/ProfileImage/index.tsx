@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 
 export default function ImageProfile() {
+    
     return (
         <div className="w-full lg:w-1/3 flex flex-col items-center p-4 border-r border-gray-200">
             <Image src="/assets/icons/profile.png" alt="Profile Image" className="w-32 h-32 rounded-full object-cover mb-4" width={40} height={40} />

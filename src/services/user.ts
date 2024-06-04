@@ -89,7 +89,7 @@ export async function deletDevice(token: any, guid_device: any) {
   });
 }
 
-export async function getHistory(token: any, deviceGuid: any) {
+export async function getHistory(token: any, deviceGuid: any, page: any) {
   const url = `${ROOT_API}/${API_VERSION}/history/device/${deviceGuid}?page=1&limit=10`;
   // const jwtToken = new JwtToken();
   // const appToken =await jwtToken.getAppToken()

@@ -18,21 +18,21 @@ export default function HistoryCard({ history }: any) {
             <span className="text-gray-500">Image not available</span>
           </div>
         ) : (
-          // <Image
-          //   alt="Image not available"
-          //   width={700}
-          //   height={300}
-          //   className="hover:scale-125"
-          //   src={`https://power-cam.pptik.id/api/v1/images/${history.value}`}
-          //   onError={handleError}
-          // />
-          <Image alt={history.guid_device} width={700} height={300} className="hover:scale-125" src="/assets/images/" />
+          <Image
+            alt={history.guid_device}
+            width={700}
+            height={300}
+            className="hover:scale-125"
+            src={`https://power-cam.pptik.id/api/v1/images/${history.value}`}
+            onError={handleError}
+          />
+          // <Image alt={history.guid_device} width={700} height={300} className="hover:scale-125" src="/assets/images/" />
         )}
       </div>
       <h1 className="mt-4 mb-2 text-xl font-bold">{history.guid_device}</h1>
-      <p className="text-sm text-gray-600">
-        {history.dateTime}
-      </p>
+      <p className="text-sm text-gray-600">{history.dateTime}</p>
+      <p className="text-sm text-gray-600">{history.description}</p>
+      <p className="text-sm text-gray-600">{history.location}</p>
     </div>
   )
 }

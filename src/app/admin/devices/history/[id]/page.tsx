@@ -12,28 +12,40 @@ interface HistoryProps {
 
 export default function History(params: HistoryProps) {
   const [historyData, setHistoryData] = useState([]) as any;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
 
   const handleCancel = () => {
     router.push('/admin/devices');
   };
 
+  const fetchHistoryData = async (page: number) => {
+    const token: any = localStorage.getItem('token');
+    try {
+      const response = await getHistory(token, params.params.id, page);
+      setHistoryData(response.data.data);
+      setTotalPages(response.data.totalPages || 1);
+    } catch (error) {
+      console.error('Error fetching history data:', error);
+    }
+  };
+
   useEffect(() => {
-    // console.log(params.params.id)
-    const fetchHistoryData = async () => {
-      const token: any = localStorage.getItem('token');
-      try {
-        const response = await getHistory(token, params.params.id);
-        // console.log('Response:',response.data.data);
+    fetchHistoryData(currentPage);
+  }, [params.params.id, currentPage]);
 
-        setHistoryData(response.data.data);
-      } catch (error) {
-        console.error('Error fetching history data:', error);
-      }
-    };
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-    fetchHistoryData();
-  }, []);
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <>
@@ -56,13 +68,27 @@ export default function History(params: HistoryProps) {
                 <HistoryCard key={index} history={historyItem} />
               ))}
               <div className="flex justify-center mt-5 w-full">
-                <button className="bg-blue-400 hover:bg-[#FFAA4D] text-white px-4 py-2 rounded-md mr-2">Prev</button>
-                <button className="bg-blue-400 hover:bg-[#FFAA4D] text-white px-4 py-2 rounded-md">Next</button>
+                <button
+                  className={`bg-blue-400 hover:bg-[#FFAA4D] text-white px-4 py-2 rounded-md mr-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  onClick={handlePrev}
+                  disabled={currentPage === 1}
+                >
+                  Prev
+                </button>
+                <button
+                  className={`bg-blue-400 hover:bg-[#FFAA4D] text-white px-4 py-2 rounded-md ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  onClick={handleNext}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+              <div className="flex justify-center mt-2 w-full">
+                <span className="text-gray-700">Page {currentPage} of {totalPages}</span>
               </div>
             </>
           )}
         </div>
-
       </div>
     </>
   )
