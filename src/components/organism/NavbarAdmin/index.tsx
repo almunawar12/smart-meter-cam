@@ -4,6 +4,8 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Cookies from "js-cookie";
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export default function Navbar() {
     const router = useRouter();
@@ -21,6 +23,7 @@ export default function Navbar() {
 
     const handleLogout = () => {
         Cookies.remove("token");
+        toast.success('Logout Success');
         router.push("/sign-in");
     };
 
@@ -81,6 +84,7 @@ export default function Navbar() {
                     )}
                 </div>
             </div>
+            <ToastContainer />
         </nav>
     );
 }

@@ -6,6 +6,7 @@ import { LoginTypes } from '@/services/data-types';
 import { setLogin } from '@/services/auth';
 import Cookies from "js-cookie";
 import { jwtDecode } from 'jwt-decode';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignInItem(): JSX.Element {
   const router = useRouter();
@@ -23,17 +24,13 @@ export default function SignInItem(): JSX.Element {
 
     const result = await setLogin(data);
 
-    // console.log(result);
-
     if (result.error) {
-      alert(result.message);
+      // alert(result.message);
+      toast.warn(result.message);
     } else {
       const token = result.data.userToken;
       const userToken = result.data.userToken;
       const appToken = result.data.appToken;
-
-      // console.log(userToken);
-      // console.log(appToken);
 
       localStorage.setItem('appToken', appToken);
       localStorage.setItem('userToken', userToken);
@@ -42,7 +39,8 @@ export default function SignInItem(): JSX.Element {
       // const tokenBase64 = btoa(token);
       // Cookies.set("token", tokenBase64, { expires: 2 });
       localStorage.setItem('token', token);
-      alert('Login Success');
+      // alert('Login Success');
+      toast.success('Login Success');
       router.push('/admin');
       // if (payload.role === 'admin') {
       //   router.push('/admin');
@@ -84,6 +82,7 @@ export default function SignInItem(): JSX.Element {
         </button>
         <p className='text-sm text-center mt-6'>{`Don't have an account? `}<Link href="/sign-up" className='text-blue-500'>SignUp Here</Link> </p>
       </form>
+      <ToastContainer />
     </div>
   );
 }
